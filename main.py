@@ -47,13 +47,15 @@ with torch.no_grad():
         # run model
         output = net(input_batch)
         # do something with output ...
-        
-        print(dir(output))
 
-        # log model performance
-        frame_count += 1
-        now = time.time()
-        if now - last_logged > 1:
-            print(f"{frame_count / (now-last_logged)} fps")
-            last_logged = now
-            frame_count = 0
+        people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-1]) > 0.6]
+        
+        print(output[0],'-',output[1],'-', output[3])
+
+        # # log model performance
+        # frame_count += 1
+        # now = time.time()
+        # if now - last_logged > 1:
+        #     print(f"{frame_count / (now-last_logged)} fps")
+        #     last_logged = now
+        #     frame_count = 0

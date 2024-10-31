@@ -50,7 +50,10 @@ with torch.no_grad():
 
         # people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-1]) > 0.6]
         
-        print(output[0],'-',output[1],'-', output[3])
+        top = list(enumerate(output[0].softmax(dim=0)))
+        top.sort(key=lambda x: x[1], reverse=True)
+        for idx, val in top[:10]:
+            print(f"{val.item()*100:.2f}% {classes[idx]}")
 
         # # log model performance
         # frame_count += 1

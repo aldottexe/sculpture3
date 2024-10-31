@@ -20,7 +20,7 @@ preprocess = transforms.Compose([
 ])
 net = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 # jit model to take it from ~20fps to ~30fps
-net = torch.jit.script(net)
+# net = torch.jit.script(net)
 
 started = time.time()
 last_logged = time.time()

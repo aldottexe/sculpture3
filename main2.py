@@ -1,11 +1,15 @@
 import torch
 import numpy as np
 from torchvision import models, transforms
+import RPi.GPIO as GPIO
 
 import cv2
 from PIL import Image
 
 cap = cv2.VideoCapture(0)
+    
+pin = 14
+GPIO.setup(pin, GPIO.OUT)
 
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
@@ -26,5 +30,8 @@ with torch.no_grad():
         people = [p for p in output.xywhn[0].numpy() if ((float(p[-1]) == 0) & (float(p[-2]) > 0.6))]
         if len(people) > 0:
             print('fire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+            GPIO.output(pin, GPIO.HIGH)
+        else:
+            GPIO.output(pin, GPIO.LOW)
 
         print(output)

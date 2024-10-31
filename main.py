@@ -48,7 +48,7 @@ with torch.no_grad():
         output = net(input_batch)
         # do something with output ...
 
-        people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-1]) > 0.6]
+        # people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-1]) > 0.6]
         
         print(output[0],'-',output[1],'-', output[3])
 

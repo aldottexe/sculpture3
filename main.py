@@ -47,6 +47,8 @@ with torch.no_grad():
         # run model
         output = net(input_batch)
         # do something with output ...
+        
+        print(dir(output))
 
         # log model performance
         frame_count += 1

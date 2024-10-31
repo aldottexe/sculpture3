@@ -5,7 +5,7 @@ from torchvision import models, transforms
 import cv2
 from PIL import Image
 
-cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+cap = cv2.VideoCapture(0)
 
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
@@ -22,7 +22,9 @@ with torch.no_grad():
         # run model
         output = model(image)
         # do something with output ...
-        print('total', output.xywhn[0].numpy())
-        # people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-1]) > 0.6]
+        # print('total', output.xywhn[0].numpy())
+        people = [p for p in output.xywhn[0].numpy() if int(p[-1]) == 0 & int(p[-2]) > 0.6]
+        if len(people) > 0:
+            print('fire!!!!!')
 
         print(output)

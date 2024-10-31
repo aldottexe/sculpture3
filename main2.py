@@ -9,6 +9,7 @@ from PIL import Image
 cap = cv2.VideoCapture(0)
     
 pin = 14
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin, GPIO.OUT)
 
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)

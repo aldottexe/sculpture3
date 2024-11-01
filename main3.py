@@ -6,11 +6,11 @@ import RPi.GPIO as GPIO
 import cv2
 from PIL import Image
 
+from gpiozero import AngularServo
+
+servo = AngularServo(18, min_pulse_width=.1/60, max_pulse_width=.12/60)
 cap = cv2.VideoCapture(0)
     
-pin = 14
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin, GPIO.OUT)
 
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
@@ -31,8 +31,8 @@ with torch.no_grad():
         people = [p for p in output.xywhn[0].numpy() if ((float(p[-1]) == 0) & (float(p[-2]) > 0.6))]
         if len(people) > 0:
             print('fire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-            GPIO.output(pin, GPIO.HIGH)
+            servo.angle = 90
         else:
-            GPIO.output(pin, GPIO.LOW)
+            servo.angle = 0
 
         print(output)

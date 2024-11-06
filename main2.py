@@ -28,8 +28,8 @@ with torch.no_grad():
         output = model(image)
         # do something with output ...
         print('total', output.xywhn[0].numpy())
-        people = [p for p in output.xywhn[0].numpy() if ((float(p[-1]) == 0) & (float(p[-2]) > 0.6))]
-        if len(people) > 0:
+        people = [p for p in output.xywhn[0].numpy() if ((float(p[-1]) == 0) & (float(p[-2]) > 0.6))] 
+        if len(people) > 0: 
             print('fire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             GPIO.output(pin, GPIO.HIGH)
         else:

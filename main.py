@@ -19,7 +19,11 @@ model = torch.hub.load('ultralytics/yolov5', 'yolov5n', pretrained=True)
 
 PINS = [25,8,7,1]
 
-pulse_interval = Value('d', 0.1)
+for pin in PINS: 
+    GPIO.setup(pin, GPIO.OUT)
+
+
+pulse_interval = Value('d', 0.03)
 
 def pulse_motor(pulse_interval):
     while True:
@@ -48,8 +52,10 @@ def ai_loop():
             if len(people) > 0: 
                 print('fire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                 GPIO.output(mosfet_pin, GPIO.HIGH)
+                pulse_interval.value = .5
             else:
                 GPIO.output(mosfet_pin, GPIO.LOW)
+                pulse_interval.value = .03
     
             print(output)
 
